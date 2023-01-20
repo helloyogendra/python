@@ -1,18 +1,17 @@
-Python Programs
+Python Core Programs.
 
-Django Website
-Django REST-API
+Django Websites.
+Django REST-API.
 
-Flask Website
-Flask REST API
+Flask Websites.
+Flask REST API.
 
-FastAPI
+FastAPI.
+Flask MicroServices.
 
-Flask MicroServices
+MySQL.
+PostgreSql.
 
-MySQL
-PostgreSql
-
-Sorting
-Searching
-Algos
+Sorting.
+Searching.
+Algos.
