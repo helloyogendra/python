@@ -2,7 +2,7 @@ from Clear import clear
 
 clear()
 
-def balanced_Brackets(arg=""):
+def balanced_Brackets1(arg=""):
     length = len(arg)
 
     if length >= 1:
@@ -31,10 +31,25 @@ def balanced_Brackets(arg=""):
     #             if arg[i] in 
     #             print(ascii(arg[i]))
 
+def balanced_Brackets2(arg=""):
+    list1 = ['(', '[', '{']
+    list2 = [')', ']', '}']
+   
+    list3 = list(arg)
+    for i, val in enumerate(list3):
+        if val in list1 or val in list2:
+            list3.pop(i)
+    if len(list3) > 0:
+        print(f"unbalanced - {arg}")
+    else:
+        print(f"balnced - {arg}")
+
+
+
 
 while(True):
     input_string = input("enter a string to check balance: ")
-    result = balanced_Brackets(input_string)
+    result = balanced_Brackets2(input_string)
     print(result)
     if("" == input("press enter to run more tests else any other key to stop: ")):
         pass
