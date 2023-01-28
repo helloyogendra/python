@@ -1,9 +1,15 @@
-FROM ubuntu:latest
+#Specifying the base image name - FROM command is mandatory
 
-EXPOSE 80
+FROM python:alpine
 
-RUN apt-get update && \
-    apt-get install nginx -y && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+LABEL Writter="Yogendra"
 
-CMD ["nginx", "-g", "daemon off;"]
+WORKDIR /app
+
+#WORKDIR /opt
+
+COPY Code.py app/Code.py
+
+ADD . /app
+
+CMD ["python", "Code.py"]

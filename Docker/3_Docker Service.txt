@@ -1,0 +1,57 @@
+#Service in Container
+
+docker container run -d -p 8080:80 nginx
+docker container run --rm -d -p 8081:80 
+
+#IP-Binding
+docker container run --rm -d -p 192.168.29.120:8082:80 nginx
+
+#Auto-Generate Host Port
+docker container run --rm -d -p 80 nginx
+docker container run --rm -d -p 192.168.29.120::80 nginx
+
+docker container port <name-or-id>
+docker container port <name-or-id> <c-port>
+
+docker container pause <name-or-id>
+docker container unpause <name-or-id>
+
+docker container stop <name-or-id>
+docker container start <name-or-id>
+docker container restart <name-or-id>
+docker container kill <name-or-id>
+
+#Running Container vs Stopped Conteiner vs Killed Container vs Paused Container
+docker container run -d -p 8081:80 --name app1 nginx
+docker container run -d -p 8082:80 --name app2 nginx
+docker container run -d -p 8083:80 --name app3 nginx
+docker container run -d -p 8084:80 --name app4 nginx
+
+docker container ls -a
+
+docker container stop app1
+docker container kill app2
+docker container pause app3
+docker container ls -a
+
+docker ps
+docker ps -a
+docker top app4
+docker top app3
+docker top app2
+
+docker stats
+docker events --since="1h"
+docker inspect app1
+docker inspect app2
+
+docker ps -a
+docker start app1 app2
+docker stop app1 app2
+docker restart app1 app2
+docker unpause app3
+docker ps -a
+
+#start and attach a container with the terminal
+docker container start -ai app1
+

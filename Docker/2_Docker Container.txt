@@ -1,0 +1,35 @@
+#Running Application in Container
+
+docker container run helloyogendra/demo-app:training
+
+#About.py Code
+===========================================================================================================================
+import socket
+import platform
+import os
+
+cmd = 'hostname'
+
+print('Executing a Python Script inside a Docker Container::')
+print(f'Following output is produced by a Docker Container where Hostname is : {os.system(cmd)}')
+print(f'Computer Name is : {platform.node()}')
+print(f'Operating System is : {platform.system()}')
+print(f'Machine Type is : {platform.machine()}')
+print(f'IP Address is : {socket.gethostbyname(socket.gethostname())}')
+
+===========================================================================================================================
+
+docker container run -it alpine
+docker container run -it helloyogendra/demo-app:training
+docker container run -it --name python-container python:3.6
+docker container rename python-container test-container
+docker container ls --all
+docker container ls -f 'status=exited'
+
+docker container rm test-container
+docker container rm -f test-container
+docker container rm $(docker container ls -f status=exited -q)
+docker container prune 
+
+#Automatically remove the stopped container
+docker container run -it --rm python:3.6
