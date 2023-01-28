@@ -2,14 +2,11 @@
 
 FROM python:alpine
 
-LABEL Writter="Yogendra"
+RUN apk update
+RUN apk add git
+RUN apk add curl
 
-WORKDIR /app
+RUN touch abc.py
+RUN echo "print('test command')" > abc.py 
 
-#WORKDIR /opt
-
-COPY Code.py app/Code.py
-
-ADD . /app
-
-CMD ["python", "Code.py"]
+CMD ["python", "abc.py"]

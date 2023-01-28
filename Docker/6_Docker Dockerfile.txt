@@ -1,0 +1,28 @@
+#Dockerfile Demo-2
+mkdir test2
+cd test2
+touch Dockerfile
+
+docker image build helloyogendra/app1:dev .
+docker images
+
+docker container run helloyogendra/app1:dev
+docker image history helloyogendra/app1:dev
+
+
+#Dockerfile Demo-3
+mkdir test3
+cd test3
+touch Dockerfile
+
+docker image build helloyogendra/app2:1.0 .
+docker images
+
+
+#Dockerfile Demo-3
+mkdir test4
+cd test4
+touch Dockerfile
+
+docker image build helloyogendra/app3:latest .
+docker images

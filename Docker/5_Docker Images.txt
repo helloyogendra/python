@@ -1,0 +1,44 @@
+#Docker Images
+
+docker pull <image-name>
+
+docker images
+docker image ls
+
+docker image rm <image-name>
+docker image history <image-name>
+
+docker image build -t repoName/imageName:tag .
+docker build -t repoName/imageName:tag .
+
+docker image tag <image-id> <name-tag>
+docker system df
+docker image prune 
+
+#Export from Container to image
+docker commit <c-id or c-name> helloyogendra/demo-app:training
+docker image ls
+
+#Save and load image
+docker image save helloyogendra/demo-app:training -o demo.tar
+docker image load -i demo.tar
+
+docker image inspect <i-id or i-name>
+
+docker image push <repoName/imageName:tag>
+
+#Dockerfile Demo-1
+mkdir test1
+cd test1
+touch Dockerfile
+vi Dockerfile
+
+docker image build .
+docker images
+docker run <image-id>
+docker image tag be6fa5212fba helloyogendra/app:test
+docker images
+
+docker image push helloyogendra/app1:dev
+
+
