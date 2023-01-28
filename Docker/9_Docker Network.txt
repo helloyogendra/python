@@ -1,0 +1,64 @@
+###Network
+
+docker network ls
+
+#Below command will create a new network and name of this new network is - mybridge and the type of network is - bridge
+$docker network create -d bridge mybridge
+
+#Below command will create a new network and the name of this new network is - my_net, when type is not mentioned it will be bridge only
+$docker network create my_net
+
+#Below command will print the list of all available networks
+$docker network ls
+
+#Below command will run a container and that container will use our new network that is -  my_net
+$docker container run -d -p 8081:80 --name web1 --network my_net nginx
+
+#Below command will run a container and that container will also use our new network that is -  my_net
+$docker container run -d -p 8082:80 --name web2 --network my_net nginx
+
+#Now we can run the below command and we can try to ping one container from another container
+$docker container exec -it web2 ping web1
+
+#It will not work if the ping command is not available inside that container but we can install ping in that container
+$docker container exec -it web2 bash
+$apt-get update
+$apt-get install inetutils-ping
+$exit
+
+#Now we can run the below command and we can try to ping one container from another container
+$docker container exec -it web2 ping web1
+
+#Let this try one more time
+$docker container exec -it web1 ping web2
+
+#It will not work if the ping command is not available inside that container but we can install ping in that container
+$docker container exec -it web1 bash
+$apt-get update
+$apt-get install inetutils-ping
+$exit
+$docker container exec -it web1 ping web2
+
+#we can check the detailed information for a container and associated network by running the below command
+$docker container inspect web1
+
+#we can check the detailed information for a container and associated network by running the below command
+$docker container inspect web2
+
+#we can check the detailed information for a network and associated container by running the below command
+$docker network inspect my_net
+
+#we can create a container and connect it with some other network, let's run a container first
+$docker container run -d -p 8083:80 --name web3 nginx
+
+#attach this container from our network by running the below command
+$docker network connect my_net web3
+
+#inspect the network again by running the below command
+$docker network inspect my_net
+
+#detach this container from our network by running the below command
+$docker network disconnect my_net web3
+
+#inspect the network again by running the below command
+$docker network inspect my_net
