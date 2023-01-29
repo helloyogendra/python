@@ -3,7 +3,20 @@ mkdir test2
 cd test2
 touch Dockerfile
 
-docker image build helloyogendra/app1:dev .
+#Commands to build a new image from a Dockerfile::
+docker build -t helloyogendra/build-app:1 .
+docker image build -t helloyogendra/build-image-app:1 .
+docker builder build -t helloyogendra/builder-app:1 .
+
+#folder
+docker build . -t helloyogendra/build-app:2 -f zzz/Dockerfile
+
+#URL - not working in "WSL2/docker-desktop", try this in "https://labs.play-with-docker.com"
+docker build git://github.com/helloyogendra/python/docker#main
+docker image ls
+docker tag <image-id> <repo/name:tag>
+
+docker image build -t helloyogendra/app1:dev .
 docker images
 
 docker container run helloyogendra/app1:dev
@@ -15,7 +28,7 @@ mkdir test3
 cd test3
 touch Dockerfile
 
-docker image build helloyogendra/app2:1.0 .
+docker image build -t helloyogendra/app2:1.0 .
 docker images
 
 
@@ -24,5 +37,8 @@ mkdir test4
 cd test4
 touch Dockerfile
 
-docker image build helloyogendra/app3:latest .
+docker image build -t helloyogendra/app3:latest .
 docker images
+
+#Remove build cache
+docker builder prune
