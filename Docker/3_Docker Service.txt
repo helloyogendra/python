@@ -1,7 +1,7 @@
 #Service in Container
 
-docker container run -d -p 8080:80 nginx
-docker container run --rm -d -p 8081:80 
+docker container run -d -p 8081:80 --name web-app1 nginx
+docker container run --rm -d -p 8082:80 --name web-app2 nginx
 
 #IP-Binding
 docker container run --rm -d -p 192.168.29.120:8082:80 nginx
