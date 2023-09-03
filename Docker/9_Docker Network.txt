@@ -62,3 +62,71 @@ $docker network disconnect my_net web3
 
 #inspect the network again by running the below command
 $docker network inspect my_net
+
+#########################################################################
+#docker-demo
+#host python code -> docker-mysql
+#docker-python-code -> docker-mysql
+
+#############################################################
+
+#docker-python-1
+import mysql.connector as ms
+print('trying to connect to mysql...')
+
+# Important Note: 
+# in python container install - mySQL python connector package using - pip install mysql-connector-python
+# to find container IP, use command  -  docker container inspect <id or name>
+# in below line, mention IP address of your mySql container instead of 'localhost'
+# also your mySql container should have a database name as 'training'
+
+db = ms.connect(host='localhost', user='root', passwd='abc123', db='training')
+cursor = db.cursor(buffered=True)
+
+cursor.execute('show tables;')
+for values in cursor:
+	print(values)
+
+print('Docker Database connection test through Python Code running in an Anaconda Env.')
+
+
+#############################################################
+#docker-python-2
+import mysql.connector as ms
+
+# Connect to DB Server
+def CheckConnection():
+    db = ms.connect(host='localhost', port=3307, user='root', passwd='abc123')
+    cursor = db.cursor(buffered=True)
+
+    cursor.execute('show databases;')
+    for values in cursor:
+        print(values)
+
+
+#Calling the function
+CheckConnection()
+
+#def ConnectToDatabase(hostName, port, passCode, user, db):
+
+# Connect to a specific database inside a DB Server
+def ConnectToDatabase():
+    db = ms.connect(host='localhost', port=3307, user='root', passwd='abc123', db='training')
+    cursor = db.cursor(buffered=True)
+
+    cursor.execute('show tables;')
+    for values in cursor:
+        print(values)
+
+
+#Calling the function
+ConnectToDatabase()
+
+
+#############################################################
+#K8s-demo
+#host python code -> port-forward -> sts-mysql 
+#pod-python-code -> service -> sts-mysql
+#[secret + config=map] -> sts -> service -> deployment -> service -> browser
+
+
