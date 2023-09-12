@@ -32,7 +32,7 @@ show now.date;
 show now.time;
 show now.minute;
 
-show `$"other format to extract date-time part", now.mm, now.dd, now.hh, now.uu, now.ss;
+/ show `$"other format to extract date-time part", now.mm, now.dd, now.hh, now.uu, now.ss;
 
 
 show `mango`cherry`banana;                       /  print list of symbols
@@ -48,7 +48,18 @@ bb: 5*0N!3*3                                        / it will print - 9 and it w
 show bb;
 
 
+{[x]; 
+    show x;
+    show `func;
+    x*x
+ }[3]
 
+ls: 2 3 4 5;
+
+{[x]
+    show x;
+    x*x
+ } each ls
 
 
 
@@ -56,16 +67,16 @@ show bb;
 
 
 / Project POC
-data: ("SII"; enlist ",") 0: `data1.csv                             / load csv-file in a variable
-count data                                                          / count number of rows from above variable, this means 'number of rows from csv-file'
+/ data: ("SII"; enlist ",") 0: `data1.csv                             / load csv-file in a variable
+/ count data                                                          / count number of rows from above variable, this means 'number of rows from csv-file'
 
-csv_string: ",\"" sv/: string each flip data                        / flip this data-variable
-raze csv_string                                                     / raze to a single value
-md5 raze csv_string                                                 / get md5 hash/checksum value
+/ csv_string: ",\"" sv/: string each flip data                        / flip this data-variable
+/ raze csv_string                                                     / raze to a single value
+/ md5 raze csv_string                                                 / get md5 hash/checksum value
 
-system "certutil -hashfile data1.csv MD5"                           / calculate hash/checksum value in Windows and get it back in KDB, along with extra output
-(system "certutil -hashfile data1.csv MD5")[1]                      / calculate hash/checksum value in Windows and get only checksum value in KDB
-(system "certutil -hashfile c:\\users\\hello\\data1.csv MD5")[1]    / observe file path here, fully qualified path mentioned
+/ system "certutil -hashfile data1.csv MD5"                           / calculate hash/checksum value in Windows and get it back in KDB, along with extra output
+/ (system "certutil -hashfile data1.csv MD5")[1]                      / calculate hash/checksum value in Windows and get only checksum value in KDB
+/ (system "certutil -hashfile c:\\users\\hello\\data1.csv MD5")[1]    / observe file path here, fully qualified path mentioned
 
 
 / Below code execute in Python to get md5 hash/checksum value
@@ -74,3 +85,25 @@ system "certutil -hashfile data1.csv MD5"                           / calculate 
 / 
 / Below command execute in Linux to get md5 hash/checksum value
 / md5sum data1.csv
+\
+
+
+file_info: hopen `:C:/Users/hello/file_info.txt;
+csv_files: exec filename from ([] filename: key `:C:/Users/hello) where like[;"*.csv"] each key `:C:/Users/hello;
+file_info_list: enlist "";
+
+
+show csv_files;
+
+lst: 10 20 30
+tmp: ()
+
+{[x]
+
+  show x
+} each lst
+
+show file_info_list;
+
+
+
