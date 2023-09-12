@@ -1,5 +1,8 @@
-#config-map
-##########################
+# Config-Map
+# We will load this config-map inside a deployment/pod
+# Pod will load these values like environment variable
+# Later our code inside that pod can read these environment variables to connect with the mysql-db-service [ type=cluster-ip service]
+#########################################################################################################################################
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,8 +13,12 @@ data:
   port: '3306'
 
 ---
-#secrets
-##########################
+# Secrets
+# Password which is mentioned in secret object is being used by both statefulset(pod) & deployment (pod)
+# While creating the mySql pod statefulset will use this password to protect our database.
+# While creating the Deployment pod, We will use this password to access the mySql pod in statefulset.
+# Deployment Pod --> cluster-ip-service -> mySql pod in statefulset
+#########################################################################################################################################
 apiVersion: v1
 kind: Secret
 metadata:
@@ -22,8 +29,12 @@ data:
 
 
 ---
-#sts
-##########################
+# Statefulset is a workload resources.
+# mySql pod/s in statefulset
+# Secret object required to protect mySql Pod/Database.
+# Service [Cluster-IP] required for internal communication with other pods inside Kubernetes Cluster.
+# Volume/Storage required to store data outside pod/container.
+#########################################################################################################################################
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -59,7 +70,7 @@ spec:
             - containerPort: 3306
           volumeMounts:
             - name: mysql-persistent-storage
-              mountPath: /var/lib/sql
+              mountPath: /var/lib/mysql
   volumeClaimTemplates:
     - metadata:
         name: mysql-persistent-storage
@@ -73,8 +84,9 @@ spec:
 
 
 ---
-#service-for-sts
-##########################
+# Service-for-sts
+# Cluster-IP
+#########################################################################################################################################
 apiVersion: v1
 kind: Service
 metadata:
@@ -88,8 +100,13 @@ spec:
 
 
 ---
-#deployment-app-code
-##########################
+# deployment-app-code
+# deployment is a workload resources.
+# Python-Code [custom-docker-image] is now part of pods controlled by deployment.
+# Secret object required to access the pods of Statefulset [mySql Database].
+# It will use the Service [Cluster-IP] to communication with Statefulset [mySql Database].
+# we are laoding the essential info through Config-Map.
+#########################################################################################################################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -154,8 +171,9 @@ spec:
 
 
 ---
-#service-for-deployment
-##########################
+# Service-for-deployment
+# Exposing the deployment/pods for external communication.
+#########################################################################################################################################
 apiVersion: v1
 kind: Service
 metadata:

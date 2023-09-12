@@ -1,0 +1,1 @@
+k)append : {[d;p;t]if[~&/.Q.qm'r:+.Q.en[d]`. t;'`unmappable];{[d;t;x]@[d;x;,;t[x]]}[d:.Q.par[d;p;t];r]'!r;@[d;`.d;:;!r];t}
