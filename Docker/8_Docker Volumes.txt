@@ -39,7 +39,8 @@ $docker run -it --name=web5 -d -p 8085:80 nginx
 
 #now open the browser and launch the - localhost:8085    
 #here we can not the page modified by us for container = web4 
-#because web4 and web5 containers are completely isolated, they are like separate machines, with their own personal storage space.
+#because web4 and web5 containers are completely isolated, 
+#they are like separate machines, with their own personal storage space.
 
 #let's say for some reason we want to create a shared storage space 
 #between containers and for that, we can create and use docker volumes
@@ -48,7 +49,8 @@ $docker run -it --name=web5 -d -p 8085:80 nginx
 #create a new volume by running the below command
 $docker volume create new_vol
 
-#again, run the below command to run a new container with nginx image only, this time we will use the volume which we just created
+#again, run the below command to run a new container with nginx image only, 
+#this time we will use the volume which we just created
 $docker run -d --name=web6 --mount source=new_vol,destination=/usr/share/nginx/html -p 8086:80 nginx
 
 #login inside this container by running the following command
@@ -71,7 +73,8 @@ $docker run -d --name=web7 --mount source=new_vol,destination=/usr/share/nginx/h
 #but container=web7 is showing the same content in the browser, because of shared volume.
 
 
-#Let's see one more example for shared volume, first, we will create a new volume, and the name of this new volume is data
+#Let's see one more example for shared volume, first, 
+#we will create a new volume, and the name of this new volume is data
 $docker volume create data
 
 #run a new container in interactive mode and mount this with our new volume

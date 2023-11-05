@@ -2,10 +2,12 @@
 
 docker network ls
 
-#Below command will create a new network and name of this new network is - mybridge and the type of network is - bridge
+#Below command will create a new network 
+#and name of this new network is - mybridge and the type of network is - bridge
 $docker network create -d bridge mybridge
 
-#Below command will create a new network and the name of this new network is - my_net, when type is not mentioned it will be bridge only
+#Below command will create a new network and the name of this new network is - my_net, 
+#when type is not mentioned it will be bridge only
 $docker network create my_net
 
 #Below command will print the list of all available networks
@@ -20,7 +22,8 @@ $docker container run -d -p 8082:80 --name web2 --network my_net nginx
 #Now we can run the below command and we can try to ping one container from another container
 $docker container exec -it web2 ping web1
 
-#It will not work if the ping command is not available inside that container but we can install ping in that container
+#It will not work if the ping command is not available inside that container 
+#but we can install ping in that container
 $docker container exec -it web2 bash
 $apt-get update
 $apt-get install inetutils-ping
@@ -32,7 +35,8 @@ $docker container exec -it web2 ping web1
 #Let this try one more time
 $docker container exec -it web1 ping web2
 
-#It will not work if the ping command is not available inside that container but we can install ping in that container
+#It will not work if the ping command is not available inside that container 
+#but we can install ping in that container
 $docker container exec -it web1 bash
 $apt-get update
 $apt-get install inetutils-ping
