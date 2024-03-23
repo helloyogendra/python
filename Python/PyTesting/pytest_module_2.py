@@ -1,13 +1,18 @@
-import pytest
+import os
 import csv
+import pytest
+
+from . import file_paths
 
 # Fixture to read data from CSV file
 @pytest.fixture(scope="module")
 def test_data():
     print("in test data ======================")
 
+    file_name = os.path.normpath(os.path.join(file_paths.csv_source_path, "test_data.csv"))
+
     data = []
-    with open(r'C:\Users\hello\git\python\Pytesting\pytest_testing\test_data.csv', 'r') as file:
+    with open(file_name, 'r') as file:
         reader = csv.DictReader(file)
         for row in reader:
             data.append(row)
@@ -17,8 +22,10 @@ def test_data():
 def pytest_generate_tests(metafunc):
     print("in pytest_generate_tests ======================")
 
+    file_name = os.path.normpath(os.path.join(file_paths.csv_source_path, "test_data.csv"))
+
     if 'row_data' in metafunc.fixturenames:
-        with open(r'C:\Users\hello\git\python\Pytesting\pytest_testing\test_data.csv', 'r') as file:
+        with open(file_name, 'r') as file:
             reader = csv.DictReader(file)
             rows = list(reader)
         metafunc.parametrize('row_data', rows)
@@ -32,7 +39,9 @@ def test_example(row_data):
     value = ""
     value = value + str(result == int(row_data['age'])) + "\n"
 
-    with open("result.txt", "a") as file:
+    file_name = os.path.normpath(os.path.join(file_paths.csv_source_path, "test_result.txt"))
+
+    with open(file_name, "a") as file:
         file.write(value)
 
     assert result == int(row_data['age'])
