@@ -74,37 +74,37 @@ def test_example(row_data):
 #     write_results(request.session)
 
 # Global variable to store test outcomes
-test_outcomes = {}
+# test_outcomes = {}
 
-# Hook to capture test outcomes
-def pytest_runtest_logreport(report):
-    print(" ::::::::::::::::::::::::::::::::::::::: ::::::::")
-    global test_outcomes
-    print(" pytest_runtest_logreport ::::::::")
-    if report.when == "call":
-        print(f"Test {report.nodeid} outcome: {report.outcome}")
-        test_outcomes[report.nodeid] = report.outcome
+# # Hook to capture test outcomes
+# def pytest_runtest_logreport(report):
+#     print(" ::::::::::::::::::::::::::::::::::::::: ::::::::")
+#     global test_outcomes
+#     print(" pytest_runtest_logreport ::::::::")
+#     if report.when == "call":
+#         print(f"Test {report.nodeid} outcome: {report.outcome}")
+#         test_outcomes[report.nodeid] = report.outcome
 
-@pytest.fixture(scope="session", autouse=True)
-def write_test_results(request):
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    def write_results():
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        with open(r'C:\Users\hello\git\python\Pytesting\pytest_testing\test_results.csv', 'w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(["Test Name", "Status"])
-            print("test_outcomes :: ", test_outcomes)
-            for test_name, outcome in test_outcomes.items():
-                test_status = "Failed" if outcome == "failed" else "Passed"
-                writer.writerow([test_name, test_status])
-                print(f" {test_name} :::::::: {test_status}")
+# @pytest.fixture(scope="session", autouse=True)
+# def write_test_results(request):
+#     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+#     def write_results():
+#         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+#         with open(r'C:\Users\hello\git\python\Pytesting\pytest_testing\test_results.csv', 'w', newline='') as file:
+#             writer = csv.writer(file)
+#             writer.writerow(["Test Name", "Status"])
+#             print("test_outcomes :: ", test_outcomes)
+#             for test_name, outcome in test_outcomes.items():
+#                 test_status = "Failed" if outcome == "failed" else "Passed"
+#                 writer.writerow([test_name, test_status])
+#                 print(f" {test_name} :::::::: {test_status}")
 
-    yield  # Continue test execution
+#     yield  # Continue test execution
 
-    # Write test results after all tests have completed
-    write_results()
+#     # Write test results after all tests have completed
+#     write_results()
 
 
-def pytest_sessionfinish(session, exitstatus):
-    global test_outcomes
-    write_test_results()
+# def pytest_sessionfinish(session, exitstatus):
+#     global test_outcomes
+#     write_test_results()
