@@ -9,8 +9,6 @@ from . import file_paths
 # Fixture to read data from CSV file
 @pytest.fixture(scope="module")
 def test_data():
-    print("in test data ======================")
-
     file_name = os.path.normpath(os.path.join(file_paths.csv_source_path, "test_data.csv"))
 
     data = []
@@ -22,8 +20,6 @@ def test_data():
 
 # Hook to dynamically generate test cases based on data from CSV file
 def pytest_generate_tests(metafunc):
-    print("in pytest_generate_tests ======================")
-
     file_name = os.path.normpath(os.path.join(file_paths.csv_source_path, "test_data.csv"))
 
     if 'row_data' in metafunc.fixturenames:
@@ -34,22 +30,16 @@ def pytest_generate_tests(metafunc):
 
 # Test case
 def test_example(row_data):
-    # Example test logic using data from CSV
-    print("row data = ", row_data)
-
-    result = int(row_data['num']) * 2  # Example logic, adjust as needed
+    #Example test logic using data from CSV
+    #print("row data = ", row_data)
     value = ""
+    result = int(row_data['num']) * 2  # Example logic
     value = value + str(result == int(row_data['age'])) + "\n"
-
     file_name = os.path.normpath(os.path.join(file_paths.csv_source_path, "test_result.txt"))
-
-    # if os.path.exists(file_name):
-    #     os.remove(file_name)
     
     with open(file_name, "a") as file:
         file.write(value)
-        time.sleep(1)
-    print("time = ", datetime.datetime.now())
+        
     assert result == int(row_data['age'])
 
     
@@ -57,7 +47,7 @@ def test_example(row_data):
 @pytest.fixture(scope="session", autouse=True)
 def one_time_execution():
     yield
-        # Define paths for input and output files
+    
     text_file_path = os.path.normpath(os.path.join(file_paths.csv_source_path, "test_result.txt"))          # Path to text file
     csv_file_path = os.path.normpath(os.path.join(file_paths.csv_source_path, "test_data.csv"))             # Path to CSV file
     output_csv_file_path = os.path.normpath(os.path.join(file_paths.csv_source_path, "Test_result.csv"))    # Path for the CSV Test Result file
@@ -65,7 +55,7 @@ def one_time_execution():
 
     input_file = open(csv_file_path,"r+")
     reader_file = csv.reader(input_file)
-    read_lines = len(list(reader_file))
+    read_lines = len(list(reader_file)) - 1
     input_file.close()                                               
 
     last_lines = None
@@ -92,7 +82,5 @@ def one_time_execution():
             # Write combined data to new CSV file
             writer.writerow(combined_data)
 
-    print("New CSV file with combined data has been created:", output_csv_file_path)
-    time.sleep(1)
-    print("time = ", datetime.datetime.now())
+    print("Test Results Saved :: ", output_csv_file_path)
 
