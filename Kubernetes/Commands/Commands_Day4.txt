@@ -1,0 +1,101 @@
+clear
+kubectl apply -f components.yaml
+#above we configured metrics-server - monitor resource(cpu/memory) usage for pod/node
+kubectl get apiservices | grep metrics
+kubectl top node
+kubectl top node docker-desktop
+kubectl top pod
+kubectl create deployment kube1 --image=nginx
+kubectl get deployments
+kubectl get pod
+# docker container run image -> docker exec -it container -> install s/w + create files -> docker commit -> new physical image (new_img)
+# docker container run new_img
+clear
+kubectl get pods
+kubectl scale deployment kube1 --replicas=5
+kubectl get pods
+kubectl get rs
+kubectl get svc
+kubectl scale deployment kube1 --replicas=2
+kubectl get pods
+kubectl get rs
+kubectl expose deployment kube1 type=NodePort --port=80
+kubectl expose deployment kube1 --type=NodePort --port=80
+clear
+kubectl get svc
+kubectl delete svc kube1
+kubectl expose deployment kube1 --type=NodePort --port=80
+kubectl get svc
+kubectl describe svc kube1
+clear
+kubectl get svc
+# while testing/debugging use exec command to modify config/code/files from your live pod
+kubectl get pods ---show-labels
+kubectl get pods --show-labels
+kubectl get pods -l app=kube1
+kubectl label pods kube1-5d8c554679-hk4xl env=dev       #adding a new label where "env" is the key and "dev" is the value
+kubectl label pods kube1-5d8c554679-hk4xl env-			#removing label 
+# debug cmds - exec, logs, describe
+# kubectl scale deployment kube1 --replicas=2   #command for replicaset to perform the replication to create/destroy pods
+#rolling updates - performing the update on pods
+kubectl describe pod kube1-5d8c554679-hk4xl
+clear
+# change the version of image for these live pods
+kubectl set image deployment kube1 nginx=nginx:1.22
+# kubectl get events --watch
+# kubectl get pods --watch
+kubectl set image deployment kube1 nginx=nginx:1.23
+# kubectl get pods
+# kubectl get deployments
+kubectl get deployments
+kubectl get pods
+kubectl rollout status deployment kube1
+kubectl rollout history deployment kube1
+kubectl rollout history deployment kube1 --revision=6
+kubectl rollout history deployment kube1 --revision=2
+clear
+# once your deployment is ready
+# scale it up for 7-9 replicas
+# update your deployment 4-5 times
+# run command - "...rollout status..."
+# run command - "...rollout history..."
+kubectl rollout undo deploy kube1
+clear
+kubectl api-versions
+kubectl api-resources
+kubectl explain deploy
+clear
+#Pods
+#Pod can have 1 or more containers
+kubectl create -f demo-two-container-pod.yaml
+kubectl get pods
+kubectl get pod two-containers --output=yaml
+kubectl describe pod two-containers
+clear
+kubectl get pods
+kubectl delete pod two-containers
+kubectl get deployments
+kubectl delete deploy kube1
+kubectl delete svc kube1
+kubectl get pods
+kubectl logs two-containers
+clear
+kubectl get pods
+kubectl exec -it two-containers -c nginx-cont -- /bin/bash
+kubectl logs two-containers
+clear
+kubectl logs two-containers -c nginx-cont
+clear
+kubectl create -f demo-pod-hooks.yaml
+kubectl get pods
+kubectl logs myapp
+clear
+# go inside this pod and check the index.html
+# go inside this pod and find various list of running process using linux command
+# have a look at the process list and kill with PID=1
+kubectl get pods
+kubectl top node
+kubectl top pod myapp
+kubectl top pod two-containers
+# you can stop or pause a running container in docker
+# can you stop or pause a running pod/container in kubernetes

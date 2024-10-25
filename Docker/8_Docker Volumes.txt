@@ -1,0 +1,117 @@
+#Volumes::
+docker volume ls
+
+docker volume create data
+docker volume inspect data
+
+docker volume prune
+
+docker volume create vol1
+docker volume rm vol1
+
+
+#run the below command to run a new container
+$docker run -it --name=web4 -d -p 8084:80 nginx
+
+#login inside this container by running the following command
+$docker exec -it web4 bash
+
+#run the below command inside the container
+$cd /usr/share/nginx/html
+
+#here we will try to modify the index.html file for nginx server
+$echo "I changed this file inside this running container" > index.html
+$exit
+
+#now open the browser and launch the - localhost:8084
+
+#stop this container
+$docker container stop web4
+
+#start this container
+$docker container start web4
+
+#now open the browser and launch the - localhost:8084
+#here we can still see the same changes.
+
+#again, run the below command to run a new container with nginx image only
+$docker run -it --name=web5 -d -p 8085:80 nginx
+
+#now open the browser and launch the - localhost:8085    
+#here we can not the page modified by us for container = web4 
+#because web4 and web5 containers are completely isolated, 
+#they are like separate machines, with their own personal storage space.
+
+#let's say for some reason we want to create a shared storage space 
+#between containers and for that, we can create and use docker volumes
+#inside the docker storage space a common storage will be created and multiple containers can share this space.
+
+#create a new volume by running the below command
+$docker volume create new_vol
+
+#again, run the below command to run a new container with nginx image only, 
+#this time we will use the volume which we just created
+$docker run -d --name=web6 --mount source=new_vol,destination=/usr/share/nginx/html -p 8086:80 nginx
+
+#login inside this container by running the following command
+$docker exec -it web6 bash
+
+#run the below command inside the container
+$cd /usr/share/nginx/html
+
+#here we will try to modify the index.html file for nginx server inside this container
+$echo "I changed nginx index file inside this the web6 container" > index.html
+$exit
+#now open the browser and launch the - localhost:8086
+
+#again, run the below command to run a new container with nginx image only, 
+#this time we will use the same volume again that we just created
+$docker run -d --name=web7 --mount source=new_vol,destination=/usr/share/nginx/html -p 8087:80 nginx
+
+#now open the browser and launch the - localhost:8087
+#now you can see here that we modified the index.html file in container=web6 
+#but container=web7 is showing the same content in the browser, because of shared volume.
+
+
+#Let's see one more example for shared volume, first, 
+#we will create a new volume, and the name of this new volume is data
+$docker volume create data
+
+#run a new container in interactive mode and mount this with our new volume
+$docker run -it --name=example1 --mount source=data,destination=/data ubuntu
+
+#now we are inside that container, let's go inside the data folder
+$cd data
+
+#create one empty file here by running the below command
+$touch sample1.txt
+$exit
+
+#run one more container in interactive mode and mount this with our new volume
+$docker run -it --name=example2 --mount source=data,destination=/data ubuntu
+
+
+#now we are inside that container, let's go inside the data folder
+$cd data
+
+#run the ls command here, now we can see that we created sample1.txt from a different container 
+#but that file is available here because of shared volume.
+$ls
+$exit
+
+#Below command will automatically a new volume and map it with a new container::
+docker run -it -v data-volume:/data ubuntu
+ls
+cd data
+touch 111.txt
+echo 12345 > 111.txt
+cat 111.txt
+hostname
+exit
+
+docker run -it -v data-volume:/data ubuntu
+cd data
+ls
+cat 111.txt
+hostname
+exit

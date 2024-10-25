@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cpu-over
+spec:
+  containers:
+    - name: ctr
+      image: vish/stress
+      imagePullPolicy: IfNotPresent
+      resources:
+        limits:
+          cpu: "100"
+        requests:
+          cpu: "100"
+      args: ["-cpus", "2"]

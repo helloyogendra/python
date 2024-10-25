@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo1
+  labels:
+    key1: value1
+    key2: value2
+spec:
+  restartPolicy: Never
+  containers:
+    - name: bc
+      image: busybox
+      imagePullPolicy: IfNotPresent
+      command:
+        - sleep
+        - 1d

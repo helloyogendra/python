@@ -1,0 +1,113 @@
+date  # Thu Jan 26 06:01:47 PM IST 2023
+clear
+kubectl get pods
+kubectl get svc
+kubectl get ingress
+kubectl apply -f ingress-demo1.yaml
+kubectl get ingress
+kubectl get svc
+kubectl get pods
+kubectl describe ingress myingress
+clear
+#ConfigMap
+kubectl get configmap
+kubectl apply -f congifmap-demo1.yaml
+kubectl get configmap
+kubectl describe configmap/example-configmap
+kubectl apply -f congifmap-pod.yaml
+ls
+clear
+ls
+kubectl apply -f configmap-pod.yaml
+kubectl get pods
+kubectl get configmap
+kubectl exec -it myapp sh
+clear
+kubectl create configmap config1 --from-file=test.txt
+kubectl get config
+kubectl get configmap
+kubectl describe config1
+kubectl describe configmap config1
+kubectl get configmap config1
+kubectl get configmap config1 -o yaml > config1.yaml
+ls
+clear
+# kubectl get configmap config1 -o yaml > config1.yaml
+#Secrets
+echo -n 'username' > user.txt
+echo -n 'abc12345' > pass.txt
+ls
+kubectl create secret generic my-creds --from-file=user.txt --from-file=pass.txt
+kubectl get secret
+kubectl describe secret
+kubectl create secret generic my-cred1 --from-file=uname=user.txt --from-file=pass=pass.txt
+kubectl get secret
+kubectl describe secret my-cred1
+clear
+echo -n 'Alex' | base64
+echo -n 'pass1234' | base64
+kubectl get secrets
+kubectl apply -f secret-demo.yaml
+kubectl apply -f secret-demo-pod.yaml
+kubectl get pods
+kubectl exec -it secret-demo-app -- /bin/bash
+clear
+kubectl apply -f secret-demo2.yaml
+kubectl exec -it secret-env-pod -- /bin/bash
+kubectl exec -it secret-env-pod -- echo $username
+kubectl exec -it secret-env-pod -- echo $SECRET_USERNAME
+kubectl exec -it secret-env-pod -- /bin/bash
+clear
+kubectl apply -f secret-demo-pod2.yaml
+# while consuming secrets through volume mounts any changes to secret will be updated automaticallly
+# while consuming secrets through env-variables any changes to secret will be updated till pod restarts
+
+kubectl exec -it secret-env-pod -- /bin/bash
+clear
+#Volumes
+docker volume ls
+#emptyDir Volume
+kubectl delete all --all
+kubectl get all
+kubectl get ingress
+kubectl delete ingress myingress
+clear
+kubectl apply -f vol-ed-demo.yaml
+# use exec command to go inside pod and check the path - '/data/redis'
+# create some random file here
+# try to force restart or find a way to kill the container
+# again -  use exec command to go inside pod and check the path - '/data/redis', look for your file
+#Persistent Volumes
+#Persistent Volumes - real/allocated storage
+#Persistent Volume Claim (PVC) - an object/request to use the PV= (Persistent Volumesreal/allocated storage)
+kubectl apply -f pv-demo.yaml
+kubectl get pv
+kubectl delete pv --all
+clear
+kubectl
+clear
+kubectl get pv
+kubectl apply -f pv-demo.yaml
+kubectl apply -f pvc-demo.yaml
+kubectl get pv
+kubectl get pvc
+kubectl apply -f pv-pvc-pod.yaml
+kubectl get pods
+kubectl logs myapp
+kubectl get events
+kubectl apply -f pv-pvc-pod.yaml
+clear
+kubectl get pods
+kubectl get events
+kubectl delete pod myapp
+kubectl apply -f pv-demo.yaml
+kubectl delete -f pv-demo.yaml
+clear
+kubectl apply -f pv-demo.yaml
+kubectl apply -f pvc-demo.yaml
+kubectl apply -f pv-pvc-pod.yaml
+kubectl get pods
+#first delete pvc
+#second delete pv
+# if issue with pv/path etc pod will not be created
+kubectl describe pod myapp

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp
+  labels:
+    name: myapp
+spec:
+  containers:
+  - name: myapp
+    image: nginx
+    imagePullPolicy: IfNotPresent
+    lifecycle:
+        postStart:
+          exec:
+            command:
+              [
+                "/bin/sh",
+                "-c",
+                "echo New index > /usr/share/nginx/html/index.html",
+              ]
+        preStop:
+          exec:
+            command: ["/bin/sh", "-c", "nginx -s quit"]
+    
