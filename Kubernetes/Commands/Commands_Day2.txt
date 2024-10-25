@@ -1,0 +1,123 @@
+docker images
+docker rmi abcdefg
+docker rmi dockergunda/mynginx
+docker rmi dockergunda/mynginx:test
+docker image prune
+clear
+docker images
+clear
+kubectl run web-app --image=alpine
+kubectl get pods
+docker container run alpine
+docker ps -a
+# Pods/Container created from Kubernetes, if we try to delete from Docker-UI/Command, K8s will try to recreate it
+# that is job of the K8s, High availability, Scalibility, (cluster = fault tolerence, traffic distribution)
+#we are controlling the container runtime/engine (docker) through Kubernetes commands/Kubectl
+# Console/Kubectl -> commands -> api-server/control-plane/master -> node [kubelet agent program]
+mkdir aaa
+cd aaa
+docker container run -it alpine
+clear
+ls
+docker build -t my-alpine:test .
+docker image ls
+clear
+docker container run -it my-alpine:test
+docker image history my-alpine:test
+clear
+docker images
+kubectl run alpine1 --image=my-alpine:test
+clear
+kubectl get pods
+kubectl logs alpine1
+kubectl get pods
+kubectl get pods -w
+cd ..
+clear
+kubectl get pods
+kubectl delete alpine1 web-app
+kubectl delete pod alpine1 web-app
+clear
+kubectl get pods
+kubectl get ns
+kubectl get all
+kubectl get pods
+kubectl get pods --all-namespaces
+kubectl -n kube-system get pods
+kubectl -n default get pods
+clear
+kubectl -n kube-system get pods
+kubectl -n kube-system describe pod kube-apiserver-docker-desktop
+clear
+kubectl run web-app --image=nginx
+kubectl get pods --watch
+kubectl get pods
+# docker container run -p 8899:80 nginx
+# docker container run -p locallhost/host-machine:container-port nginx
+# docker container run -p 8891:80 nginx    # this will work first time
+# docker container run -p 8891:80 nginx    # this will not work second time
+docker container run -p 80 nginx
+clear
+docker container run -d -p 80 nginx
+docker ps -a
+clear
+kubectl get pods
+# syntax is = kubectl port-forward <pod-name> <hostPort>:<pod-port>
+kubectl port-forward web-app 8081:80
+kubectl get pods
+kubectl describe pod web-app
+clear
+kubectl get pods -o wide
+kubectl logs web-app
+clear
+#kubectl port-forward it will make a request to the api-server
+#any traffic will be tunneled over a single http connection
+kubectl get pods --show-labels
+kubectl exec -it web-app -- /bin/bash         #going inside a running pod/container like - docker exec command
+clear
+kubectl get pods
+helm
+clear
+#Namespaces
+lsns
+kubectl get ns
+kubectl get namespace
+kubectl get namespaces
+kubectl create namespace test-ns
+kubectl get namespaces
+kubectl run web1 ---image=httpd
+kubectl run web1 --image=httpd
+clear
+kubectl get namespaces
+kubectl get po
+kubectl run web1 --image=httpd
+kubectl run web1 --image=httpd --namespace=test-ns
+kubectl get pods
+kubectl get pods --namespace=test-ns
+kubectl api-resources
+clear
+kubectl api-resources --namespaced=true
+kubectl api-resources --namespaced=false
+clear
+kubectl get namespaces
+#default - default workspace for resources/objects
+kubectl -n kube-system get pods
+#change the default namespace
+kubectl get pods
+kubectl delete pod/web1
+kubectl get pods
+kubectl config set-context --current --namespace=test-ns
+kubectl get pods
+kubectl config set-context --current --namespace=default
+kubectl get pods
+kubectl create -f ns-demo1.yaml
+clear
+kubectl get ns
+kubectl delete -f ns-demo1.yaml
+kubectl get ns
+ls
+# kubectl delete -f ns-demo1.yaml   #delete the assiciated object with this yaml file, file will not be deleted
+kubectl get pods --namespace=test-ns
+kubctl delete ns test-ns
+kubectl delete ns test-ns
+# we deleted a namespace, objects belong to that namespace will be deleted, good for testing.

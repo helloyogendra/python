@@ -1,0 +1,78 @@
+# Debugging Commands::
+
+docker container logs <id or name>
+
+docker container run --name container1 -it alpine
+uname
+hostname
+date
+ls 
+printenv
+exit
+
+docker container logs container1
+
+#Stop all containers::
+docker stop $(docker ps -a -q)
+
+#Remove all containers::
+docker rm $(docker ps -a -q)
+
+#Run a command inside a running container
+docker container run -d -p 8001:80 --name web1 nginx
+docker container exec web1 ls -al /usr/share/nginx/html
+
+#Launch/Connect a shell inside a running container
+docker container exec -it web1 bash
+
+#Launch - http://localhost:8001/
+#Customize this container's existing files
+ls
+cd usr/share/nginx/html/
+echo "<html><head><h1><p>Hello Docker</p></h1></head></html>" > index.html
+
+#Launch - http://localhost:8001/
+#Customize this container further::
+
+apt-get update
+git
+apt install git
+git
+mkdir example
+touch example/abc.txt
+echo "sample data" > example/abc.txt
+ls
+cat example/abc.txt
+ 
+#Launch a new Terminal to test pause container command
+docker container pause web1
+docker container unpause web1
+
+
+#Attach Container
+#Attach local standard input, output, and error streams to a running container::
+docker run -dit --name demo ubuntu /usr/bin/top -b
+docker attach demo
+docker ps -a --filter name=demo
+
+#Copy Files::
+docker container cp web1:/usr/share/nginx/html/index.html .
+docker container cp data.txt nginx:/usr/share/nginx/html
+
+#Inspecting Containers::
+docker container inspect web1
+
+#Fetch Docker System Events::
+docker system events --since="30m"
+
+docker system events --since '2023-02-01'
+
+docker system events --filter 'event=stop'
+docker system events --filter 'image=alpine'
+
+docker system events --filter 'container=test'
+docker system events --filter 'type=volume'
+
+docker system events --since="10m" --format '{{json .}}'
+
+

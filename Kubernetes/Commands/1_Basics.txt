@@ -1,0 +1,79 @@
+date #Kubernetes-16-Jan-2023
+clear
+docker
+clear
+kubectl
+clear
+#Docker-Desktop with WSL-Linux on Windows-11
+#Minikube on Windows-11 with Powershell
+docker ps -a
+docker container ls -a
+docker images
+docker network ls
+docker volumes ls
+docker volume ls
+docker image ls
+# we need images to create/run containers
+# we can create/build our own cutom images
+# COntainer behave like VMs but they are not Virtual MAchine
+# Container are process, isolated by concept of Linux namespace, like a virtual environment with it's file system, storage etc
+# K8s is internally dependent on some kind of "Container runtime" only, like "Docker" or "containerd"
+kubectl version
+kubectl version --short
+kubectl version --output=yaml
+clear
+kubectl get node
+kubectl cluster-info
+kubectl get pods
+kubectl get pod
+kubectl get po
+kubectl get deployments
+kubectl get namespaces
+kubectl get rs
+kubectl get svc
+kubectl get all
+docker container run -d -p 8081:80 httpd    #create and run a new container by using the apache image, host machine port=8081 should be free
+docker container ls -a
+clear
+#above docker command will directly create a container on top of docker engine, controlled by docker-runtime
+kubectl run my-app --image=httpd    #create and run a new pod having apache container by using the apache image
+kubectl get pods
+#in production or in a real time project we are not going to create pods like this
+#creating a single pod good for learning, practice or simple testing
+# in the real-time or in prod we are going to deal with the deployments to create/manage/destry pods
+# docker container run -d -p 8081:80 httpd
+# kubectl run my-app --image=httpd
+date
+ping google.com
+history
+clear
+# minkube setup - https://minikube.sigs.k8s.io/docs/start/
+kubectl get nodes -o wide
+kubectl get nodes -o yaml
+clear
+kubectl get nodes -o json
+clear
+kubectl describe node
+clear
+kubectl describe node docker-desktop
+clear
+kubectl describe node/docker-desktop
+clear
+kubectl get pods
+kubectl describe pod my-app
+clear
+kubectl describe pod/my-app
+clear
+kubectl explain node
+clear
+kubectl explain pod
+# docker images
+# images vs containers
+# images = binaries, with some basic part of OS, file system, folders, files, code, softwares, commands etc - build -> image/physical file
+# containers - running process by using any of the available/desired/specified image
+# stopped container - it will not use any cpu or memory, only small kind of disk-storage to maintain the status of that container
+# paused containers - it will not use any cpu but it will use memory, status is paused/halted
+kubectl get secrets
+kubectl get configmap
+kubectl get configmap    #static data/config data, like json setting file, xml setting file, to store file-path, network path, db address, port
+ 

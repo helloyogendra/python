@@ -1,0 +1,15 @@
+Info:
+===============================
+Useful Tool to monitor resource (CPU & Memory) usage by Pods & Nodes.
+Steps to install/enable Metrics-Server API : 
+Tested on "Docker-Desktop"
+==============================================================
+
+1 - Go inside yaml folder
+2 - Find a file here, name = components.yaml
+3 - Copy this file into your Linux Home directory
+4 - Run this command in your terminal -   kubectl apply -f components.yaml
+5 - Wait for 2-3 minutes 
+6 - To check, now run this command -      kubectl get apiservices | grep metrics
+7 - To check the node metrics, run -         kubectl top node
+8 - To check the pod metrics, run -           kubectl top pod <pod-name> 

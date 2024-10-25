@@ -1,0 +1,138 @@
+#Service in Container
+
+docker container run -d -p 8081:80 --name web-app1 nginx
+docker container run --rm -d -p 8082:80 --name web-app2 nginx
+
+#IP-Binding
+docker container run --rm -d -p 192.168.29.120:8082:80 nginx
+
+#Auto-Generate Host Port
+docker container run --rm -d -p 80 nginx
+docker container run --rm -d -p 192.168.29.120::80 nginx
+
+docker container port <name-or-id>
+docker container port <name-or-id> <c-port>
+
+docker container pause <name-or-id>
+docker container unpause <name-or-id>
+
+docker container stop <name-or-id>
+docker container start <name-or-id>
+docker container restart <name-or-id>
+docker container kill <name-or-id>
+
+#Running Container vs Stopped Conteiner vs Killed Container vs Paused Container
+docker container run -d -p 8081:80 --name app1 nginx
+docker container run -d -p 8082:80 --name app2 nginx
+docker container run -d -p 8083:80 --name app3 nginx
+docker container run -d -p 8084:80 --name app4 nginx
+
+docker container ls -a
+
+docker container stop app1
+docker container kill app2
+docker container pause app3
+docker container ls -a
+
+docker ps
+docker ps -a
+docker top app4
+docker top app3
+docker top app2
+
+docker stats
+docker events --since="1h"
+docker inspect app1
+docker inspect app2
+
+docker ps -a
+docker start app1 app2
+docker stop app1 app2
+docker restart app1 app2
+docker unpause app3
+docker ps -a
+
+#start and attach a container with the terminal
+docker container start -ai app1
+
+docker container run -it alpine
+docker container start -ai <name-or-id>
+
+docker container run -it alpine hostname
+docker container run -it alpine hostname
+docker container run -it alpine hostname
+
+docker container run -it alpine ls
+docker container run -it alpine printenv
+
+
+#create a container and start it later
+docker container create -p 8085:80 --name app5 nginx
+docker container start app5
+
+#Container Restart Policy
+docker container run -d -p 8086:80 --restart always --name app6 nginx
+
+#New-terminal
+docker container exec -it app6 bash
+kill 1
+
+#Old-terminal
+docker ps -a
+
+
+#Database Service Containers:
+docker container run --name mysql-db -e MYSQL_ROOT_PASSWORD=abc123 -d mysql
+docker container exec -it mysql-db mysql mysql -p
+
+
+#Use a Docker Container Database Server to connect from outside code:
+docker container run -p 3303:3306 --name mysql1 -e MYSQL_ROOT_PASSWORD=abc123 -d mysql
+#Write & Run Python Code = Db1.py
+
+
+docker container exec -it mysql1 mysql mysql -p
+CREATE USER 'alex'@'%' IDENTIFIED BY 'pass123';
+GRANT ALL PRIVILEGES ON training.* to 'alex'@'%';
+#Write & Run Python Code = Db1.py
+
+
+#Go inside this MySql container like a normal mahcine::
+docker container exec -it mysql1 bash
+
+
+#EMPTY PASSWORD DB::
+docker container run -p 3304:3306 --name mysql2 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -d mysql
+docker container exec -it mysql2 mysql
+
+
+#RANDOM PASSWORD DB::
+docker container run -p 3308:3306 --name mysql3 -e MYSQL_RANDOM_ROOT_PASSWORD=yes -d mysql
+docker container logs mysql3
+docker container exec -it mysql3 mysql mysql -p<random-pass-no space after -p flag> 
+
+#PostgreSQL Example
+docker container run -d --name pgsql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=abc123 -p 54322:5432 postgres:latest
+
+ docker container exec -it pgsql bash
+ psql -U postgres -W
+ create database test;
+ exit
+ exit
+
+
+# MySQL Database and Python in same Container
+
+docker container run -p 3303:3306 --name my_database -e MYSQL_ROOT_PASSWORD=abc123 -d mysql
+docker container exec -it my_database bash
+
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py
+pip
+pip install mysql-connector-python
+pwd
+touch mysql_demo.py
+# find this file in vs code and paste python code and save this file
+ls
+python mysql_demo.py 
+history

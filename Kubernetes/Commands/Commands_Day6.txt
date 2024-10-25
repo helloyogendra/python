@@ -1,0 +1,94 @@
+kubectl apply -f cpu-fine.yaml
+kubectl top node
+kubectl top pod
+kubectl get pods
+kubectl top pod
+kubectl apply -f cpu-greedy.yaml
+kubectl get pods
+kubectl top node
+kubectl top pod cpu-greedy
+kubectl get pods
+kubectl apply -f cpu-over.yaml
+clear
+kubectl get pods
+kubectl top node
+kubectl top pod cpu-over
+kubectl get pods
+kubectl describe pod cpu-over
+clear
+kubectl get pods
+kubectl get all
+kubectl top node
+kubectl delete pod cpu-fine cpu-greedy cpu-over
+kubectl top node
+clear
+kubectl create -f labels-demo.yaml
+kubectl get pods --show-labels
+kubectl create -f labels-demo2.yaml
+kubectl get pods --show-labels
+kubectl get pods -l key1=value1
+kubectl get pods -l 'app in (web, abc, xyz)'
+kubectl get pods -l 'app notin (web1, abc, xyz)'
+kubectl label demo1-app group=testing
+kubectl delete demo1-app
+kubectl create -f labels-demo2.yaml
+kubectl delete -f labels-demo2.yaml
+kubectl delete -f labels-demo.yaml
+clear
+kubectl get pods
+clear
+kubectl create -f labels-demo2.yaml
+kubectl create -f labels-demo.yaml
+kubectl get pods
+kubectl get pods --show-labels
+kubectl label pod/demo1 env=dev
+kubectl get pods --show-labels
+kubectl describe pod demo1
+clear
+kubectl get pods --show-labels
+kubectl label pod/demo1 env-
+kubectl get pods --show-labels
+kubectl get pods -l key1=valu1,key2=value2
+kubectl get pods -l key1=value1,key2=value2
+kubectl label pod/demo1 key1=newvalue --overwrite
+kubectl get pods --show-labels
+kubectl get pods -l key2!=value2
+clear
+kubectl get pods
+kubectl annotate pod demo2 team=development
+kubectl describe pod demo2
+clear
+kubectl annotate pod demo2 team-
+#try to overwrite an annotation same way as label
+kubectl apply -f replicaset-demo1.yaml
+kubectl get rs
+kubectl get deploy
+kubectl get pods
+kubectl delete pod demo1 demo2
+kubectl get pods
+clear
+kubectl describe rs rs-demo1
+kubectl get pods rs-demo1-m7qn8 -o yaml
+clear
+kubectl get deploy
+kubectl get rs
+kubectl get pods
+kubectl apply -f replicaset-demo-pods.yaml
+kubectl get pods
+kubectl apply -f replicaset-demo-pods.yaml
+# delete everything we created - replicaset and afterwards we created two pods
+# now try to create two independent pods first and after that try to create your replicaset
+# observe events and pod lifecycle in --watch mode
+# kubectl get pods -w
+# kubectl get events -w
+clear
+kubectl get pods
+kubectl get rs
+kubectl delete rs rs-demo1
+kubectl get pods
+kubectl apply -f replicaset-demo1.yaml
+kubectl get pods
+kubectl delete rs rs-demo1 --cascade=orphan
+kubectl get pods
+# now try to check the pod info - owner reference
+# kubectl delete rs rs-demo1 --cascade=orphan       #just delete the replicaset and leave the pods

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app
+  labels:
+    name: my-app
+spec:
+  containers:
+  - name: my-app
+    image: redis
+    resources:
+      limits:
+        memory: "256Mi"
+        cpu: "500m"
+    volumeMounts:
+      - name: redis-storage
+        mountPath: /data/redis
+  volumes:
+    - name: redis-storage
+      emptyDir: {}
