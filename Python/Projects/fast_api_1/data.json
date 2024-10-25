@@ -1,8 +1,0 @@
-[
-    { "title" : "One", "author" : "auth-one", "category" : "science"},
-    { "title" : "Two", "author" : "auth-two", "category" : "fiction"},
-    { "title" : "Three", "author" : "auth-three", "category" : "comic"},
-    { "title" : "Four", "author" : "auth-four", "category" : "novel"},
-    { "title" : "Five", "author" : "auth-five", "category" : "epic"},
-    { "title" : "Six", "author" : "auth-Six", "category" : "science"}
-]
