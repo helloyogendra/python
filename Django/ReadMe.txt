@@ -1,1 +1,0 @@
-#Folder to maintain code for Python/Django based Personal Projects.

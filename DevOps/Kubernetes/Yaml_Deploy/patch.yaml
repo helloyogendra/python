@@ -1,6 +1,0 @@
-spec:
-  template:
-    spec:
-      containers:
-      - name: patch-demo-cont-z
-        image: redis
