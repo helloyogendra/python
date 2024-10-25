@@ -1,0 +1,26 @@
+Python
+PySpark, Pandas, Dask
+Databricks, Data Factory, Data Lake
+Django, Flask, FastAPI
+Tornedo
+Celery, Redis, RabbitMQ
+AWS Lambda
+Sorting, Searching, Data Structures & Algoritms.
+
+#
+# Logging in Python
+# Multithreading and # Multitprocessing
+# AsyncIO
+# Metaprogramming - Metaclasses, Class Decorators, Dynamic Class creation at run time
+# Coroutines & Concurrency - async - await
+# Memory Profiler
+# Performance Optimization
+# Advanced Data Structures - "namedtuple", "dataclasses", and "collections.abc"
+# Functional Programming Libraries - "toolz", "functools".
+# Type Hinting and Static Typing - Static type checking with "MyPy",
+# Memory-Mapped Files - "mmap"
+# Cython
+# Python Bytecode: Examining and manipulating Python bytecode
+# Creating Python Packages: Structuring and distributing packages with "setuptools"
+# Event-Driven Programming: Using libraries like "Twisted" or "Tornado".
+# Cryptography: Using libraries like "cryptography" and "PyCrypto".

@@ -1,3 +1,6 @@
-﻿name,num,mobile,age
-john,101,12345,32
-tom,102,12321,35
+﻿name,num,mobile,age,data
+bob,25,12121,50,{"start": 101, "end": 102}
+john,101,12345,32,{"start": "101", "end" : "102"}
+tom,102,12321,35,{"start": 101}
+matt,33,221133,66,{"start": 101}
+maxx,35,221133,70,{"start": 101}
