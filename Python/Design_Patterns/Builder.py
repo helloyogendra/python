@@ -1,4 +1,4 @@
-### 1. **Define the Data Processing Builder Class**
+# 1. Define the Data Processing Builder Class
 
 # In this example, we'll build a `DataFrameBuilder` class that encapsulates various transformation steps, 
 # such as filtering, joining, and aggregating.
