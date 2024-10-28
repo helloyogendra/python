@@ -6,7 +6,7 @@ from datetime import datetime
 import os
 
 # Set the folder path where you want to save the screenshots
-folder_path = "C:\\Users\\YSingh\\test\\screenshots"
+folder_path = "G:\\My Drive\\screenshots"
 
 os.makedirs(folder_path, exist_ok=True)
 
@@ -24,5 +24,5 @@ def take_screenshot():
 # Run the screenshot function every 30 seconds
 while True:
     take_screenshot()
-    time.sleep(10)
+    time.sleep(30)
 
