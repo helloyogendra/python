@@ -17,8 +17,8 @@ def my_function(x):
 
 
 if __name__ == '__main__':
-    # Limiting the number of processes to 4
-    pool = multiprocessing.Pool()
+    
+    pool = multiprocessing.Pool()            #pool = multiprocessing.Pool(processes=4)   # Limiting the number of processes to 4
 
     list1 = [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000]
     # Your tasks
