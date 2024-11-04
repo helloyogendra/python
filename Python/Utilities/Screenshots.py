@@ -24,5 +24,5 @@ def take_screenshot():
 # Run the screenshot function every 30 seconds
 while True:
     take_screenshot()
-    time.sleep(30)
+    time.sleep(15)
 
