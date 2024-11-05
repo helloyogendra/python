@@ -1,3 +1,12 @@
+# Descriptors
+# Python descriptors are a powerful mechanism for customizing attribute access and modification. 
+# They allow to define custom behavior when an attribute is accessed, set, or deleted
+# 
+# When to Use Descriptors:
+# to customize attribute access or modification behavior.
+# to implement validation or data transformation logic for attributes.
+# to create reusable components for attribute management.
+
 # Example - 1:
 
 def descriptor_demo_1():
@@ -83,6 +92,58 @@ def descriptor_demo_2():
 
 descriptor_demo_2()
 
+
+# Example
+# Using one Descriptor [One property/atttribute] across multiple classes
+
+class PositiveInteger:
+    def __get__(self, instance, owner):
+        return instance._value
+    
+    def __set__(self, instance, value):
+        if value < 0:
+            raise ValueError("Must be positive")
+        instance._value = value
+
+class Account:
+    balance = PositiveInteger()
+
+class Product:
+    stock = PositiveInteger()
+
+acc = Account()
+acc.balance = 100
+
+prod = Product()
+prod.stock = 50
+
+
+
+# Example
+# Using Descriptor for type checking / type enforcement
+
+class TypedProperty:
+    def __init__(self, name, type_):
+        self.name = name
+        self.type_ = type_
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+        return instance.__dict__[self.name]
+
+    def __set__(self, instance, value):
+        if not isinstance(value, self.type_):
+            raise TypeError(f"Expected {self.type_}, got {type(value)}")
+        instance.__dict__[self.name] = value
+
+class Person:
+    age = TypedProperty("age", int)
+
+person = Person()
+person.age = 25  # Valid
+
+# person.age = "25"             # Raises TypeError
 
 
 
