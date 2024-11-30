@@ -24,10 +24,6 @@ namespace ExcelMerger
             string fileStartsWith = config["FileStartsWith"];
             string fileEndsWith = config["FileEndsWith"];
 
-            Console.WriteLine(folderPath);
-            Console.WriteLine(mergedFileName);
-            Console.WriteLine(processedFolderPath);
-
             try
             {
                 // Get files based on criteria
@@ -37,20 +33,18 @@ namespace ExcelMerger
                     .Take(numberOfFilesToMerge)
                     .ToList();
 
-                foreach(var f in files)
-                    Console.WriteLine(f);
-
                 if (!files.Any())
                 {
                     Console.WriteLine("No files matching the criteria found.");
                     return;
                 }
 
-                // Create a new workbook for the merged file
+               // Create a new workbook for the merged file
                 IWorkbook mergedWorkbook = new XSSFWorkbook();
                 ISheet mergedSheet = mergedWorkbook.CreateSheet("Merged");
 
                 int currentRow = 0;
+                bool isHeaderAdded = false; // Flag to track if the header has been added
 
                 foreach (var file in files)
                 {
@@ -59,11 +53,14 @@ namespace ExcelMerger
                         IWorkbook workbook = new XSSFWorkbook(fileStream);
                         ISheet sheet = workbook.GetSheetAt(0);
 
-                        // Copy content to the merged sheet
                         for (int rowIndex = sheet.FirstRowNum; rowIndex <= sheet.LastRowNum; rowIndex++)
                         {
                             IRow row = sheet.GetRow(rowIndex);
                             if (row == null) continue;
+
+                            // Check if it's the header row and skip if already added
+                            if (rowIndex == sheet.FirstRowNum && isHeaderAdded)
+                                continue;
 
                             IRow newRow = mergedSheet.CreateRow(currentRow++);
                             for (int colIndex = row.FirstCellNum; colIndex < row.LastCellNum; colIndex++)
@@ -75,6 +72,10 @@ namespace ExcelMerger
                                     newCell.SetCellValue(cell.ToString());
                                 }
                             }
+
+                            // Mark header as added after the first row of the first file
+                            if (rowIndex == sheet.FirstRowNum)
+                                isHeaderAdded = true;
                         }
                     }
                 }
