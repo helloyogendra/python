@@ -28,8 +28,8 @@ namespace ExcelMerger
             {
                 // Get files based on criteria
                 var files = Directory.GetFiles(folderPath)
-                    // .Where(f => f.StartsWith(fileStartsWith, StringComparison.OrdinalIgnoreCase) &&
-                    //             f.EndsWith(fileEndsWith, StringComparison.OrdinalIgnoreCase))
+                    .Where(f => f.Contains(fileStartsWith, StringComparison.OrdinalIgnoreCase) &&
+                                 f.EndsWith(fileEndsWith, StringComparison.OrdinalIgnoreCase))
                     .Take(numberOfFilesToMerge)
                     .ToList();
 
